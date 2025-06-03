@@ -1,0 +1,18 @@
+ @import "../../styles/main.scss"; 
+ 
+
+ .dialog{
+
+ .content{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+ }
+.cansel{
+ color: $dark-color !important;
+}
+.save{
+ background-color: $dark-color !important;
+ color: $secondary-color !important;
+}
+}

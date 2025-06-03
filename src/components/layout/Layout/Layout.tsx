@@ -12,6 +12,7 @@ export const Layout = () =>{
         <main>
           <Outlet/>
         </main>
+      
       </div>
       
     </div>

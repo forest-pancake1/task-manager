@@ -1,5 +1,5 @@
 
-import { TaskList } from "../components/TaskList"
+import { TaskList } from "../components/TaskList/TaskList"
 
 export const HomePage = () => {
   return (
