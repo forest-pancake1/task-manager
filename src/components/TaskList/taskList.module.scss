@@ -48,7 +48,7 @@ min-height: 100vh;
   .content{
     display: flex;
     flex-direction: column;
-    gap: 15px; 
+    gap: 10px; 
      span{
       margin-left: 12px;
       font-size: 16px;
@@ -56,14 +56,37 @@ min-height: 100vh;
       transition: all 0.2s ease;
 
       &:first-child{
-        font-size: 19px;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 600;
+        font-size: 18px;
         color: $text-dark;
       }
+    }
+    .deadline{
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 12px;
+      margin-top: -6px;
     }
   }
   .task_buttons{
     display: flex;
     flex-direction: row;
+    align-items: center;
+
+    .priority{
+      padding: 5px 8px;
+      border-radius: 5px;
+      cursor: default;
+      &.low{
+      background-color: rgb(175, 247, 177);
+      }
+      &.medium{
+      background-color: rgb(250, 240, 184);
+      }
+      &.high{
+      background-color: rgb(250, 169, 165);
+      }
+    }
 
     .checkbox{
       color: $dark-color !important;

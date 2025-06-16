@@ -6,7 +6,7 @@ export const Sidebar = () => {
    <div className={styles.sidebar}>
      <h1 className={styles.logo}>Task Manager</h1>
      <ul className={styles.list}>
-       <LinkButton to="/">Home</LinkButton>
+       <LinkButton to="/home">Home</LinkButton>
        <LinkButton to="/settings">settings</LinkButton>
      </ul>
    </div>

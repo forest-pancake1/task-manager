@@ -3,8 +3,11 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { createTask } from '../../api/tasks';
 // import styles from './addTask.module.scss';
-import { Dialog, TextField, Button, DialogActions, DialogContent, DialogTitle} from '@mui/material';
+import { Dialog, TextField, Button, DialogActions, DialogContent, DialogTitle, ToggleButton, ToggleButtonGroup} from '@mui/material';
 import styles from './addTask.module.scss'
+import { TurnRight } from '@mui/icons-material';
+
+
 
 interface addTaskFormProps{
   open: boolean,
@@ -39,22 +42,54 @@ export const AddTaskForm = ({open, onClose}:addTaskFormProps) =>{
   const formik = useFormik({
     initialValues: {
       title: '',
-      description: ''
+      description: '',
+      priority: 'medium',
+      deadline: ''
     },
     validationSchema,
     onSubmit: (values) =>{
       addTask({
         title: values.title,
         description: values.description,
+        priority: values.priority as 'low' | 'medium' | 'high',
+        deadline: values.deadline,
         completed: false,
-        //тут потом можно так же добавить значимось и другие штуки
       })
     }
   })
   return(
-     <Dialog open={open} onClose={onClose} className={styles.dialog}>
-        <form onSubmit={formik.handleSubmit}>
+     <Dialog open={open} onClose={onClose}>
+        <form onSubmit={formik.handleSubmit}className={styles.dialog}>
           <DialogTitle>Create new task</DialogTitle>
+          <DialogTitle className={styles.priority_title}>choose priority</DialogTitle>
+          <ToggleButtonGroup
+              value={formik.values.priority}
+              onChange={(_, newPriority) => {if(newPriority !== null) formik.setFieldValue('priority', newPriority)}}
+              fullWidth
+              exclusive
+              className={styles.toggle_buttons}
+              >
+
+              <ToggleButton value="low" className={styles.low}>low</ToggleButton>
+              <ToggleButton value="medium" 
+                  sx={{backgroundColor: 'rgb(249, 247, 230)',
+                      '&.Mui-selected': { backgroundColor: 'rgb(250, 235, 152)', },
+                      '&:hover': { backgroundColor: 'rgb(250, 235, 152)', },
+                    }}
+                >medium</ToggleButton>
+              <ToggleButton value="high" className={styles.high}>high</ToggleButton>
+
+          </ToggleButtonGroup>
+          <TextField
+          fullWidth
+          name='deadline'
+          label='deadline'
+          id='deadline'
+          value={formik.values.deadline}
+          type='date'
+          onChange={formik.handleChange}
+          InputLabelProps={{shrink: true}}
+          />
           <DialogContent className={styles.content}>
              <TextField className={styles.text}
              fullWidth

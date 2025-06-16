@@ -2,12 +2,36 @@
  
 
  .dialog{
-
- .content{
   display: flex;
   flex-direction: column;
   gap: 20px;
- }
+  margin: 10px;
+  .priority_title{
+    font-size: small;
+    color: $text-secondary;
+    margin-bottom: -30px;
+  }
+   
+  .toggle_buttons{
+     .low{
+      background-color: $priority-low-light;
+      &:focus, &:hover{
+      background-color: $priority-low
+      }
+      }
+      .high{
+      background-color: $priority-hidh-light;
+      &:focus, &:hover{
+      background-color: $priority-high
+      }
+     }
+  }
+
+
+  .text{
+    margin-bottom: 15px;
+  }
+ 
 .cansel{
  color: $dark-color !important;
 }

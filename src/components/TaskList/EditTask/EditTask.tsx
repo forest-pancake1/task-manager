@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import type { Task } from "../../../api/tasks";
-import { Dialog, TextField, Button, DialogActions, DialogContent, DialogTitle} from '@mui/material';
+import { Dialog, TextField, Button, DialogActions, DialogContent, DialogTitle,  ToggleButton, ToggleButtonGroup} from '@mui/material';
 import styles from './editTask.module.scss'
 
 interface EditTaskProps{
@@ -15,6 +15,8 @@ const formik = useFormik({
   initialValues: {
     title: task.title,
     description: task.description,
+    priority: task.priority,
+    deadline: task.deadline,
     complited: task.completed
   },
   onSubmit: (values) => {
@@ -26,10 +28,38 @@ const formik = useFormik({
 })
 return(
 <Dialog open={open} onClose={onClose}>
-<DialogTitle>Edit the task</DialogTitle>
-<form onSubmit={formik.handleSubmit}>
+<DialogTitle>Edit task</DialogTitle>
+<form onSubmit={formik.handleSubmit} className={styles.dialog}>
+  <ToggleButtonGroup
+      value={formik.values.priority}
+      onChange={(_, newPriority) => {if(newPriority !== null) formik.setFieldValue('priority', newPriority)}}
+      fullWidth
+      exclusive
+      className={styles.toggle_buttons}
+      >
+      <ToggleButton value="low" className={styles.low}
+     sx={{'&.Mui-selected': {backgroundColor: 'rgb(137, 247, 140)',} }}
+      >low</ToggleButton>
+      <ToggleButton value="medium" className={styles.medium}
+      sx={{'&.Mui-selected': {backgroundColor: 'rgb(250, 235, 152)',} }}
+      >medium</ToggleButton>
+      <ToggleButton value="high" className={styles.high}
+      sx={{'&.Mui-selected': {backgroundColor: 'rgb(251, 152, 147)',} }}
+      >high</ToggleButton>
+  </ToggleButtonGroup>
+  <TextField
+          fullWidth
+          name='deadline'
+          label='deadline'
+          id='deadline'
+          value={formik.values.deadline}
+          type='date'
+          onChange={formik.handleChange}
+          InputLabelProps={{shrink: true}}
+          />
   <DialogContent>
   <TextField
+  fullWidth
   name="title"
   label="add title"
   onChange={formik.handleChange}

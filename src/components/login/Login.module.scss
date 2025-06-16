@@ -1,0 +1,27 @@
+@import "../../styles/main.scss";
+
+.screen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: $light-color;
+.box{
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  width: 100%;
+  gap: 10px; 
+  padding: 20px;
+
+  .text{
+    color: $text-secondary;
+  }
+  .submit{
+    background-color: $primary-color;
+  }
+  .registr{
+    color: $primary-color;
+  }
+}
+}

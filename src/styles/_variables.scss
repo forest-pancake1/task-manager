@@ -12,25 +12,10 @@ $text-secondary: #6c757d;
 $text-light: #f8f9fa;
 $text-dark: #343a40;
 
-// Размеры
-$base-font-size: 16px;
-$font-size-sm: 0.875rem;
-$font-size-lg: 1.25rem;
-
-// Отступы
-$spacing-unit: 8px;
-$spacing-sm: $spacing-unit * 0.5;  // 4px
-$spacing-md: $spacing-unit;        // 8px
-$spacing-lg: $spacing-unit * 2;   // 16px
-$spacing-xl: $spacing-unit * 4;   // 32px
-
-// Тени
-$box-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
-$box-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-$box-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-
-// Брейкпоинты
-$breakpoint-sm: 576px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 992px;
-$breakpoint-xl: 1200px;
+//приоритеты
+$priority-low-light:rgb(235, 252, 236);
+$priority-low:rgb(137, 247, 140);
+$priority-medium-light:rgb(249, 247, 230);
+$priority-medium:rgb(250, 235, 152);
+$priority-hidh-light:rgb(251, 233, 232);
+$priority-high:rgb(251, 152, 147);

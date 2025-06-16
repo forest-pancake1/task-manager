@@ -1,18 +1,21 @@
 import { Task } from '@mui/icons-material';
 
 
+
  export interface Task {
   id: string;
   title: string;
-  description: string;
+  description?: string;
+  priority: 'low' | 'medium' | 'high';
+  deadline?: string;
   completed: boolean;
 }
 
 let tasks: Task[] = [
-  {id: '1', title: 'make some coffe',description: 'помыть кофеварку и кружку, залить воду, добавть кофе, поставить на плиту, налить кофе, добавть молоко', completed: true},
-  {id: '2', title: 'make a bed',description: 'just once, just do it', completed: false},
-  {id: '3', title: 'do tour morning routine',description: 'as usual', completed: true},
-  {id: '4', title: 'create CRUD operations',description: 'i did it?', completed: false}
+  {id: '1', title: 'make some coffe',description: 'i cant do anything without coffee', priority: 'high', deadline: '24.06.2025', completed: true},
+  {id: '2', title: 'make a bed', priority: 'low',deadline: '24.06.2026', completed: false},
+  {id: '3', title: 'do tour morning routine',description: 'as usual', priority: 'medium', completed: true},
+  {id: '4', title: 'create CRUD operations', priority: 'high',deadline: '10.06.2025', completed: false}
 ]
 //get
 export const fetchTask = async (): Promise<Task[]> => {
@@ -65,3 +68,4 @@ export const api = {
 //  })
 //  if(!response.ok) throw new Error('ошибка создания задачи');
 //   return response.json()
+

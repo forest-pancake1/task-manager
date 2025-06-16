@@ -9,6 +9,7 @@ import { api } from "../../api/tasks";
 import { type Task } from "../../api/tasks";
 
 
+
 export const TaskList = () =>{
   const {
     data: tasks,
@@ -77,10 +78,12 @@ export const TaskList = () =>{
         >
           <div className={style.content}>
           <span>{task.title}</span>
+          <span className={style.deadline}>{task.deadline? `Due: ${new Date(task.deadline).toLocaleDateString()}`: "No deadline"}</span>
           <span>{task.description}</span>
           </div>
 
           <div className={style.task_buttons}>
+            <span className={`${style.priority} ${style[task.priority]}`}>{task.priority}</span>
           <Checkbox
           className={style.checkbox}
           checked={task.completed}
