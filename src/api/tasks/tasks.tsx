@@ -1,7 +1,6 @@
 import { Task } from '@mui/icons-material';
 
 
-
  export interface Task {
   id: string;
   title: string;
@@ -9,18 +8,19 @@ import { Task } from '@mui/icons-material';
   priority: 'low' | 'medium' | 'high';
   deadline?: string;
   completed: boolean;
+  userId: string;
 }
 
 let tasks: Task[] = [
-  {id: '1', title: 'make some coffe',description: 'i cant do anything without coffee', priority: 'high', deadline: '24.06.2025', completed: true},
-  {id: '2', title: 'make a bed', priority: 'low',deadline: '24.06.2026', completed: false},
-  {id: '3', title: 'do tour morning routine',description: 'as usual', priority: 'medium', completed: true},
-  {id: '4', title: 'create CRUD operations', priority: 'high',deadline: '10.06.2025', completed: false}
+  {id: '1', title: 'make some coffe',description: 'i cant do anything without coffee', priority: 'high', deadline: '24.06.2025', completed: true, userId: '2'},
+  {id: '2', title: 'make a bed', priority: 'low',deadline: '24.06.2026', completed: false, userId: '2'},
+  {id: '3', title: 'do tour morning routine',description: 'as usual', priority: 'medium', completed: true, userId: '2'},
+  {id: '4', title: 'create CRUD operations', priority: 'high',deadline: '10.06.2025', completed: false, userId: '2'}
 ]
 //get
-export const fetchTask = async (): Promise<Task[]> => {
+export const fetchTask = async (userId: string): Promise<Task[]> => {
   await new Promise(resolve =>setTimeout(resolve, 1000))
-  return [...tasks]
+  return tasks.filter(task => task.userId === userId)
 }
 //put
 export const updateTask = async (updateTask: Task): Promise<Task> => {

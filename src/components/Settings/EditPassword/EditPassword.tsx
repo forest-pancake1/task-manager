@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import type { User } from "../../../api/users";
+import type { User } from "../../../api/users/types";
 import * as Yup from 'yup';
 import { Button, Dialog, DialogTitle, TextField } from "@mui/material";
 import styles from './editPassword.module.scss'
@@ -34,7 +34,7 @@ export const EditPassword = ({user, open, onClose, onSave}: editPasswordProps) =
   return(
     <Dialog open={open} onClose={onClose}>
       <form onChange={formik.handleSubmit} className={styles.form}>
-        <DialogTitle>Chacge Password</DialogTitle>
+        <DialogTitle>Change Password</DialogTitle>
       <TextField
       label='Enter new password'
       name="password"
@@ -42,7 +42,7 @@ export const EditPassword = ({user, open, onClose, onSave}: editPasswordProps) =
       onChange={formik.handleChange}
       />
        <TextField
-      label='onfirm your password'
+      label='confirm your password'
       name="confirmPassword"
       value={formik.values.confirmPassword}
       onChange={formik.handleChange}

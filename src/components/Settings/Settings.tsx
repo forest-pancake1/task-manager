@@ -1,5 +1,5 @@
-import { Avatar, Box, Button, TextField } from "@mui/material"
-import type { User } from "../../api/users";
+import { Avatar, Box, Button, Divider, TextField } from "@mui/material"
+import type { User } from "../../api/users/types";
 import { useFormik } from "formik";
 import styles from './Settings.module.scss'
 import { EditPassword } from "./EditPassword/EditPassword";
@@ -19,11 +19,13 @@ export const ProfilePage = () =>{
     )
   }
 
-const currentUser: User = JSON.parse(currentUserString)
+const parsedUser: User = JSON.parse(currentUserString)
+  const [currentUser, setUser] = useState(parsedUser)
 
 const handleSave = (updatedUser: User) =>{
   localStorage.setItem('currentUser', JSON.stringify(updatedUser))
   console.log('updated user:', updatedUser)
+  setUser(updatedUser)
 }
 return(
   <Settings user={currentUser} onSave={handleSave}></Settings>
@@ -56,7 +58,6 @@ function stringAvatar(name: string) {
 }
 
 export const Settings = ({user, onSave}:EditUser) => {
-
   const [isEditingOpen, setisEditingOpen] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -71,7 +72,7 @@ export const Settings = ({user, onSave}:EditUser) => {
     onSubmit: (values) =>{
        onSave({
         ...user,
-        ...values
+        ...values,
        })
     }
   })
@@ -82,9 +83,13 @@ export const Settings = ({user, onSave}:EditUser) => {
       className={styles.photo}
       />
       <h2>{user.username}</h2>
-      <span>{user.email}</span>
+      <span>email:{user.email}</span>
+      <Divider orientation="horizontal" flexItem/>
+      <span>city:{user.city}</span>
+      <Divider orientation="horizontal" flexItem/>
+      <span>phone number:{user.phone}</span>
       </Box>
-      <form onSubmit={formik.handleSubmit}className={styles.box2}>
+      <form onSubmit={formik.handleSubmit} className={styles.box2}>
         <h2>Profile settings</h2>
         <div className={styles.grid}>
         <TextField

@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import type { Task } from "../../../api/tasks";
+import type { Task } from "../../../api/tasks/tasks";
 import { Dialog, TextField, Button, DialogActions, DialogContent, DialogTitle,  ToggleButton, ToggleButtonGroup} from '@mui/material';
 import styles from './editTask.module.scss'
 

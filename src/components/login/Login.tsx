@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
-import { users } from '../../api/users';
+import { users } from '../../api/users/users';
 import { Box, Button, TextField } from '@mui/material';
 import styles from './Login.module.scss'
 

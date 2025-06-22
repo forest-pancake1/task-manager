@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 import { useFormik } from "formik"
 import * as Yup from 'yup';
 import style from "./LogUp.module.scss"
-import { registerUser } from "../../api/users";
+import { registerUser } from "../../api/users/users";
 import { useNavigate } from "react-router-dom";
 
 

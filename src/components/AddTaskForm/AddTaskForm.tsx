@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { createTask } from '../../api/tasks';
+import { createTask } from '../../api/tasks/tasks';
 // import styles from './addTask.module.scss';
 import { Dialog, TextField, Button, DialogActions, DialogContent, DialogTitle, ToggleButton, ToggleButtonGroup} from '@mui/material';
 import styles from './addTask.module.scss'

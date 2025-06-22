@@ -1,23 +1,29 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { CircularProgress, List, ListItem, Checkbox, Button } from "@mui/material";
 import style from "./taskList.module.scss"
-import { AddTaskForm } from "../AddTaskForm/AddTaskForm";
-import { TaskMenu } from "./TaskMenu";
-import { EditTask } from "./EditTask/EditTask";
+import { AddTaskForm } from "../../AddTaskForm/AddTaskForm";
+import { TaskMenu } from "../TaskMenu";
+import { EditTask } from "../EditTask/EditTask";
 import { useState } from "react";
-import { api } from "../../api/tasks";
-import { type Task } from "../../api/tasks";
+import { api } from "../../../api/tasks/tasks";
+import { type Task } from "../../../api/tasks/tasks";
+import type { Filter } from "../filters/types";
 
+type props = {
+  filter: Filter
+};
 
+export const TaskList = ({filter}: props) =>{
 
-export const TaskList = () =>{
+   const currentUser = JSON.parse(localStorage.getItem("currentUser")!) 
+
   const {
     data: tasks,
     isLoading,
     isError
-  } = useQuery({
-    queryKey: ['tasks'],
-    queryFn: api.fetchTask
+  } = useQuery<Task[]>({
+    queryKey: ['tasks', currentUser.id],
+    queryFn: () => api.fetchTask(currentUser.id)
   });
 
   const queryClient = useQueryClient();
@@ -29,10 +35,10 @@ export const TaskList = () =>{
   const { mutate: toggleTask} = useMutation({
     mutationFn: api.updateTask,
     onMutate: async(updatedTask) => {
-      await queryClient.cancelQueries({queryKey: ['tasks']})
-      const previousTasks = queryClient.getQueryData<Task[]>(['tasks'])
+      await queryClient.cancelQueries({queryKey: ['tasks', currentUser.id]})
+      const previousTasks = queryClient.getQueryData<Task[]>(['tasks', currentUser.id])
 
-       queryClient.setQueryData<Task[]>(['tasks'], (old) =>
+       queryClient.setQueryData<Task[]>(['tasks', currentUser.id], (old) =>
         old?.map(task => 
           task.id === updatedTask.id ? updatedTask: task
         )
@@ -40,7 +46,7 @@ export const TaskList = () =>{
       return previousTasks
     },
     onSuccess:() =>{
-      queryClient.invalidateQueries({queryKey: ['tasks']})
+      queryClient.invalidateQueries({queryKey: ['tasks', currentUser.id]})
     }
   })
   const handleToggle = (task: Task) =>{
@@ -50,7 +56,7 @@ export const TaskList = () =>{
   const { mutate: updateTaskFull } = useMutation({
   mutationFn: (updatedTask: Task) => api.updateTask(updatedTask),
   onSuccess: () => {
-    queryClient.invalidateQueries({queryKey: ['tasks']})
+    queryClient.invalidateQueries({queryKey: ['tasks', currentUser.id]})
     setEditingTask(null);
   }
 });
@@ -58,21 +64,37 @@ export const TaskList = () =>{
   const {mutate: deleteTaskMutation} = useMutation({
     mutationFn: api.deleteTask,
     onSuccess:() =>{
-      queryClient.invalidateQueries({queryKey: ['tasks']})
+      queryClient.invalidateQueries({queryKey: ['tasks', currentUser.id]})
     }
   })
   if(isLoading){return <CircularProgress/>};
   if(isError){return <div>Ошибка загрузки задач</div>};
-
+  if (!tasks || !filter) return null;
+ 
+  const filteredTasks = tasks?.filter(task =>
+    filter.priority === 'all' || task.priority === filter.priority
+  ).filter(task => {
+    if(filter.status === 'all') return true
+    return filter.status === 'complited'? task.completed : !task.completed
+}).filter(task => {
+  const {start, end} = filter.date ?? {};
+  if (!start || !end) return true;
+  if (!task.deadline) return false;
+  const deadLine = new Date(task.deadline)
+  return deadLine >= start && deadLine <= end
+}).filter(task => {
+  if(!filter.query) return true;
+  return task.title.toLowerCase().includes(filter.query.toLowerCase())
+})
   return(
     <div className={style.container}>
     <Button variant="contained" className={style.button} onClick={() => setIsAddOpen(true)}>
      + Add new task
     </Button>
-    <AddTaskForm open={isAddOpen} onClose={() => setIsAddOpen(false)} />
+    <AddTaskForm open={isAddOpen} onClose={() => setIsAddOpen(false)}  />
 
     <List className={style.list}>
-      {tasks?.map(task => (
+      {filteredTasks?.map(task => (
         <ListItem className={style.item}
         key={task.id}
         >

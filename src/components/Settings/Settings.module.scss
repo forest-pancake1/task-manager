@@ -21,6 +21,13 @@ gap: 25px;
     font-size: 32px;
     letter-spacing: 4px;
   }
+  h2{
+    cursor: default;
+  }
+  span{
+    color: $text-secondary;
+    cursor: default;
+  }
 }
 
 .box2{
@@ -33,6 +40,9 @@ gap: 25px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px; 
   gap: 15px;
+  h2{
+    cursor: default;
+  }
   .grid{
    display: grid;
    grid-template-columns: 1fr 1fr;
